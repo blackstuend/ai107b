@@ -20,8 +20,9 @@ function search(obj) { //傳入陣列 0的位置 方向 廣度搜尋
     var x = old_obj.x, y = old_obj.y
     var memory;
     if (old_obj.dir != 3) { //如果上一次走的不是上面(避免換到一樣的)，那就把0跟上面那個調換
-        // var new_obj = Object.assign({}, old_obj); //創一個新的obj來存改變位置過的內容
+        // var new_obj = Object.assign({}, old_obj); //創一個新的obj來存改變位置過的內容 
         var new_obj = JSON.parse(JSON.stringify(old_obj))
+        //==========1234 分別代表 上右下左=========
         if (x - 1 >= 0) { //如果是可以換得就把他換了然後丟進obj裡面
             memory = new_obj.puzzle[x - 1][y]
             new_obj.puzzle[x - 1][y] = new_obj.puzzle[x][y]
@@ -32,7 +33,7 @@ function search(obj) { //傳入陣列 0的位置 方向 廣度搜尋
             obj.push(new_obj)
         }
     }
-    if (old_obj.dir != 4) { //如果上一次走的不是上面(避免換到一樣的)，那就把0跟上面那個調換
+    if (old_obj.dir != 4) { 
         var new_obj = JSON.parse(JSON.stringify(old_obj)) //複製一個新的json
         if (y + 1 <= 2) { //如果是可以換得就把他換了然後丟進obj裡面
             memory = new_obj.puzzle[x][y + 1]
@@ -44,7 +45,7 @@ function search(obj) { //傳入陣列 0的位置 方向 廣度搜尋
             obj.push(new_obj)
         }
     }
-    if (old_obj.dir != 1) { //如果上一次走的不是上面(避免換到一樣的)，那就把0跟上面那個調換
+    if (old_obj.dir != 1) { 
         var new_obj = JSON.parse(JSON.stringify(old_obj))
         if (x + 1 <= 2) { //如果是可以換得就把他換了然後丟進obj裡面
             memory = new_obj.puzzle[x + 1][y]
@@ -56,7 +57,7 @@ function search(obj) { //傳入陣列 0的位置 方向 廣度搜尋
             obj.push(new_obj)
         }
     }
-    if (old_obj.dir != 2) { //如果上一次走的不是上面(避免換到一樣的)，那就把0跟上面那個調換
+    if (old_obj.dir != 2) { 
         var new_obj = JSON.parse(JSON.stringify(old_obj))
         if (y - 1 >= 0) { //如果是可以換得就把他換了然後丟進obj裡面
             memory = new_obj.puzzle[x][y - 1]
