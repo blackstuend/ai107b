@@ -62,6 +62,9 @@ function find_neighbor(obj, queen_length) {
 function search(q) { //廣度搜尋 7個以上overflow
     var obj = q.shift()
     var queen_length = obj.queen_location.length
+    if(queen_length == 0){
+        return 
+    }
     if (queen_length == queen_num) {
         return console.log(obj.queen_location)
     }
