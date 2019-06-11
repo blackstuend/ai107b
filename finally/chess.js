@@ -3,9 +3,9 @@ const readline = require('readline');
 const score_stand = {
     "10111": 720, "011110": 4320, "011100": 720, "001110": 720, "011010": 720, "010110": 720,
     "11110": 720, "01111": 720, "11011": 720, "11111": 50000, "11101": 720,
-    "001100": 120, "001010": 120, "010100": 120, "000100": 20, "001000": 20,"011":30,"110":30
+    "001100": 120, "001010": 120, "010100": 120, "011":30,"110":30
 }
-const score_pattern = ['11111', "011110", "011100", "001110", "011010", "010110", "11110", "01111", "11011", "10111", "11101", "001100", "001010", "010100","011","110", "000100", "001000"]
+const score_pattern = ['11111', "011110", "011100", "001110", "011010", "010110", "11110", "01111", "11011", "10111", "11101", "001100", "001010", "010100","011","110"]
 function init() { //create clear board 
     var board = [];
     for (var i = 0; i < size; i++) {
@@ -149,8 +149,11 @@ function find_neighbors(board, x,y,turn) {
     }
     return array
 }
+var n_x,n_y;
 function min_max(board, x,y,deep, max_deep = 2)  {
     var visit = {}
+    n_x = x;
+    n_y = y;
     var max_score = -100000
     var best_pos = []
     var neighbors = find_some_neighbors(board,x,y,'w')
@@ -160,7 +163,6 @@ function min_max(board, x,y,deep, max_deep = 2)  {
         var current_x =neighbor[0]
         var current_y =neighbor[1]
         var score = min(new_board, current_x,current_y, deep + 1, max_deep)
-        console.log(score)
         if (score == max_score) {
             best_pos.push({ best_x: current_x, best_y:  current_y })
         }
@@ -179,13 +181,13 @@ function min(board, x, y, deep, max_deep) {
     if (deep == max_deep || score >= 1400) {
         return score;
     }
-    var neighbors =  find_some_neighbors(board,x,y,'b')
+    var neighbors =  find_some_neighbors(board,n_x,n_y,'b')
     for (neighbor of neighbors) {
         var current_x =neighbor[0]
         var current_y =neighbor[1]
         var new_board = array_copy(board)
         new_board[neighbor[0]][neighbor[1]] = 'b'
-        var score = max(new_board, x,  y , deep + 1, max_deep)
+        var score = max(new_board, current_x,  current_y , deep + 1, max_deep)
         score = -score;
         if (min_score > score)
             min_score = score;
@@ -202,13 +204,13 @@ function max(board, x, y, deep, max_deep) {
     if (deep == max_deep || score >= 1400) {
         return score;
     }
-    var neighbors = find_some_neighbors(board,x,y,'w')
+    var neighbors = find_some_neighbors(board,n_x,n_y,'w')
     for (neighbor of neighbors) {
         var current_x =neighbor[0]
         var current_y =neighbor[1]
         var new_board = array_copy(board)
         new_board[current_x][current_y] = 'w'
-        var score = min(new_board,x, y, deep + 1, max_deep)
+        var score = min(new_board,current_x, current_y, deep + 1, max_deep)
         if (max_score < score)
             max_score = score;
     }
